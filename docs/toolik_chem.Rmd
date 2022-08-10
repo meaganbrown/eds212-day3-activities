@@ -1,0 +1,61 @@
+---
+title: "day3-activity2"
+author: "Meagan Brown"
+date: '2022-08-10'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Load Libraries
+
+```{r}
+library(janitor)
+library(tidyverse)
+library(here)
+```
+
+```{r}
+toolik_biochem <- read_csv(here("data", "2011_Kling_Akchem.csv"), na = ".") %>% 
+  clean_names()
+```
+
+```{r}
+# Create a subset of the data that contains only observations from the “Toolik Inlet” site, and that only contains the variables (columns) for pH, dissolved organic carbon (DOC), and total dissolved nitrogen (TDN) (hint: see dplyr::select()). Store this subset as inlet_biochem. Make sure to LOOK AT the subset you’ve created.
+
+inlet_biochem <- toolik_biochem %>% 
+  filter(site == "Toolik Inlet") %>% 
+  select(c("p_h", "doc_u_m", "tdn_u_m"))
+
+
+# Find the mean value of each column in inlet_biochem 3 different ways:
+
+inlet_biochem_mean1 <- inlet_biochem %>% 
+  group_by() %>% 
+  summarize(mean_ph = mean(p_h,
+            na.rm = TRUE),
+            mean_doc = mean(doc_u_m,
+            na.rm = TRUE),
+            mean_tdn = mean(tdn_u_m,
+            na.rm = TRUE))
+
+
+# Write a for loop from scratch to calculate the mean for each
+means <- vector(mode = "numeric", 
+                      length = length(seq_along(inlet_biochem)))
+
+for(i in seq_along(inlet_biochem)) {
+  col_mean <- mean(inlet_biochem[[i]], na.rm = TRUE)
+  means[i] <- col_mean
+}
+
+# Use one other method (e.g. apply, across, or purrr::map_df) to find the mean for each column.
+ inlet_biochem_mean3 <- inlet_biochem %>% 
+  group_by() %>% 
+  summarize(across(where(is.numeric), 
+                   mean, 
+                   na.rm = TRUE))
+```
+

@@ -1,0 +1,76 @@
+---
+title: "conditionals_loops"
+author: "Meagan Brown"
+date: '2022-08-10'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+pm2_5 <- 101
+
+if(pm2_5 < 100) {
+  print("Low to moderate risk")
+} else if (pm2_5 >= 100 & pm2_5 < 150 ) {
+  print("Unhealthy for sensitive groups")
+} else {(pm2_5 >= 150) 
+  print("Health risk present")
+}
+```
+
+```{r}
+species <- ("blue whale")
+
+if (species == "blue whale") {
+  print("you found a whale!")
+}
+```
+
+```{r}
+max_airtemp_c <- 24.1 
+
+if(max_airtemp_c > 27) {
+  print("Temperature too high")
+} else if(max_airtemp_c <= 27) {
+  print("Temperature is OK")
+}
+```
+
+```{r}
+base_burrito <- 6.50
+
+main_ingredient <- c("veggie", "chicken", "steak")
+
+if (main_ingredient == "veggie") {
+  print(base_burrito)
+} else if(main_ingredient == "chicken") {
+  print(base_burrito + 3)
+}  else {(main_ingredient == "steak")
+  print(base_burrito + 3.25) }
+```
+
+```{r}
+fish <- c("goldfish" = 8, "tetras" = 10, "guppies" = 12, "mollies" = 23)
+
+fish_proportions <- vector(mode = "numeric", 
+                      length = length(fish))
+
+for(i in seq_along(fish)) {
+  fish_prop <- fish[i] / sum(fish)
+  fish_proportions[i] <- fish_prop
+}
+
+fish_df <- data.frame(fish, fish_proportions)
+
+```
+
+```{r}
+
+for(i in seq_along(month.name)) {
+  print(paste(month.name[i], "is month", i))
+} 
+```
+
